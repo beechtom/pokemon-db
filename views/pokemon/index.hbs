@@ -1,0 +1,157 @@
+<section class="hero is-medium is-primary is-bold">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Pokémon Database
+      </h1>
+      <h2 class="subtitle">
+        View all currently discovered Pokémon below.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+    <div class="container">
+    <div class="box">
+        <span class="title is-4">View Pokémon</span>
+
+        <form class="is-pulled-right" METHOD="GET" ACTION="/pokemon">
+            <div class="field has-addons">
+                <div class="control"><div class="select is-rounded">
+                    <select class="is-rounded" name="type" required>
+                        <option selected disabled>Filter By Type</option>
+                        <option value="">All</option>
+                        {{#each type}}
+                        <option>{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div></div>
+                <div class="control">
+                    <button class="button is-primary is-rounded">Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="box">
+    {{#if pokemon}}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sprite</th>
+                <th>National ID</th>
+                <th>Name</th>
+                <th>Flavor Text</th>
+                <th>Primary Type</th>
+                <th>Secondary Type</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each pokemon}}
+            <tr>
+                <td><img src="{{sprite}}"></td>
+                <td>{{id}}</td>
+                <td>{{name}}</td>
+                <td>{{flavor}}</td>
+                <td><span style="color:{{firstColor}}"><strong>{{first}}</strong></span></td>
+                <td>
+                    {{#if second}}<span style="color:{{secondColor}}"><strong>{{second}}</strong></span>
+                    {{else}}--{{/if}}
+                </td>
+                <td>
+                    <a class="button is-light is-rounded" href="/pokemon/{{id}}">View</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{else}}
+    <h5 class="subtitle is-5 has-text-centered">No Pokémon of this type.</h5>
+    {{/if}}
+    </div>
+    </div>
+</section>
+
+
+<!-- BEGIN MODAL FORM -->
+<button class="button is-rounded is-primary is-medium" id="showModal">
+    <span class="icon"><i class="fas fa-plus"></i></span>
+    <span>Add Pokémon</span>
+</button>
+
+<div class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+      <div class="box">
+            <h3 class="title">Add a Pokémon</h3>
+            <span class="subtitle is-6">You can find a list of Pokémon <a href="https://pokemondb.net/pokedex/national" target="_blank">here</a>.</span>
+            <hr>
+            <form METHOD="POST" ACTION="/pokemon">
+            <div class="columns">
+                <div class="field column">
+                    <label class="label">Name</label>
+                    <input class="input" type="text" name="name" placeholder="name" required>
+                </div>
+
+                <div class="field column">
+                    <label class="label">National ID</label>
+                    <div class="control">
+                        <input class="input" type="number" name="id" placeholder="id" required>
+                    </div>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="field column">
+                    <label class="label">Primary Type</label>
+                    <div class="control"><div class="select is-fullwidth">
+                        <select name="ptype" required>
+                            <option selected disabled>Choose a type</option>
+                            {{#each type}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div></div>
+                </div>
+
+                <div class="field column">
+                    <label class="label">Secondary Type</label>
+                    <div class="control"><div class="select is-fullwidth">
+                        <select name="stype">
+                            <option selected disabled>Choose a type</option>
+                            {{#each type}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div></div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Sprite URL</label>
+                <div class="control">
+                    <input class="input" type="text" name="sprite" placeholder="url" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Flavor Text</label>
+                <div class="control">
+                    <input class="input" type="text" name="flavor" placeholder="flavor text" required>
+                </div>
+            </div>
+
+            <hr>
+            <button class="button is-primary is-fullwidth is-rounded">Add Pokemon</button>
+            </form>
+      </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<!-- END MODAL FORM -->
+
+<!-- BEGIN SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="/scripts/main.js"></script>
+<!-- END SCRIPTS -->

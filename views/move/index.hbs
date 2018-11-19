@@ -1,0 +1,158 @@
+<section class="hero is-medium is-primary is-bold">
+      <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+        Moves Database
+        </h1>
+        <h2 class="subtitle">
+        View all currently known moves below.
+        </h2>
+        </div>
+    </div>
+</section>
+
+<!-- BEGIN MOVES -->
+<section class="section">
+<div class="container">
+    <div class="box">
+        <span class="title is-4">View Moves</span>
+
+        <form class="is-pulled-right" METHOD="GET" ACTION="/move">
+            <div class="field has-addons">
+                <div class="control"><div class="select is-rounded">
+                    <select name="type" required>
+                        <option selected disabled>Filter By Type</option>
+                        <option value="">All</option>
+                        {{#each type}}
+                        <option>{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div></div>
+                <div class="control">
+                    <button class="button is-primary is-rounded">Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="box">
+    {{#if move}}
+    <table class="table is-fullwidth">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="has-text-centered">PP</th>
+                <th class="has-text-centered">Power</th>
+                <th class="has-text-centered">Accuracy</th>
+                <th colspan="2">Flavor Text</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each move}}
+            <tr>
+                <td>{{name}}</td>
+                <td><span style="color:{{color}}"><strong>{{type}}</strong></span></td>
+                <td class="has-text-centered">{{pp}}</td>
+                <td class="has-text-centered">{{#if power}}{{power}}{{else}}--{{/if}}</td>
+                <td class="has-text-centered">{{#if accuracy}}{{accuracy}}{{else}}--{{/if}}</td>
+                <td>{{flavor}}</td>
+                <td class="has-text-right">
+                    <form class="is-pulled-right" METHOD="POST" ACTION="/move/{{id}}?_method=DELETE">
+                    <button class="button is-rounded">Delete</button>
+                    </form> 
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{else}}
+    <h5 class="subtitle is-5 has-text-centered">No moves of this type.</h5>
+    {{/if}}
+    </div>
+</div>
+</section>
+<!-- END MOVES -->
+
+
+
+<!-- BEGIN MODAL FORM -->
+<button class="button is-rounded is-primary is-medium" id="showModal">
+    <span class="icon"><i class="fas fa-plus"></i></span>
+    <span>Add Move</span>
+</button>
+
+<div class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+      <div class="box">
+            <h3 class="title">Add a Move</h3>
+            <span class="subtitle is-6">You can find a list of moves <a href="https://bulbapedia.bulbagarden.net/wiki/List_of_moves" target="_blank">here</a>.</span>
+            <hr>
+            <form METHOD="POST" ACTION="/move">
+            <div class="columns">
+                <div class="field column">
+                    <label class="label">Name</label>
+                    <div class="control">
+                        <input class="input" type="text" name="name" placeholder="name" required> 
+                    </div>
+                </div>
+
+                <div class="field column">
+                    <label class="label">Type</label>
+                    <div class="control"><div class="select is-fullwidth">
+                        <select name="type" required>
+                            <option selected disabled>Choose a type</option>
+                            {{#each type}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div></div>
+                </div>
+            </div>
+            
+            <div class="columns">
+                <div class="field column">
+                    <label class="label">PP</label>
+                    <div class="control">
+                        <input class="input" type="number" name="pp" placeholder="pp" required>
+                    </div>
+                </div>
+
+                <div class="field column">
+                    <label class="label">Power</label>
+                    <div class="control">
+                        <input class="input" type="number" name="power" placeholder="power">
+                    </div>
+                </div>
+
+                <div class="field column">
+                    <label class="label">Accuracy</label>
+                    <div class="control">
+                        <input class="input" type="number" name="accuracy" placeholder="accuracy">
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Flavor Text</label>
+                <div class="control">
+                    <input class="input" type="text" name="flavor" placeholder="flavor text" required>
+                </div>
+            </div>
+            
+            <hr>
+            <button class="button is-primary is-fullwidth is-rounded">Add Move</button>
+        </form>
+      </div>
+  </div>
+
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<!-- END MODAL FORM -->
+
+<!-- BEGIN SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="/scripts/main.js"></script>
+<!-- END SCRIPTS -->

@@ -1,0 +1,87 @@
+<section class="hero is-medium is-light is-bold">
+      <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+        {{#each party}}
+        <h1 class="title">{{name}}</h1>
+        <h2 class="subtitle">{{flavor}}</h2>
+        {{/each}}
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <!-- BEGIN RATING -->
+    <div class="box container">
+        <div class="columns is-vcentered">
+            <div class="column">
+                {{#each party}}
+                {{#if rating}}
+                <p class="heading">Rating</p>
+                <p class="title"> {{rating}} / 5</p>
+                {{else}}<p class="title">No Rating</p>
+                {{/if}}
+                {{/each}}
+            </div>
+
+            <div class="column has-text-right">
+                <p class="heading">Add Rating</p>
+                <form class="is-pulled-right" METHOD="POST" ACTION="/rating/{{id}}">
+                    <button class="button is-light tooltip is-tooltip-bottom" data-tooltip="1" name="rating" value="1"><span class="icon"><i class="fas fa-star"></i></span></button>
+                    <button class="button is-light tooltip is-tooltip-bottom" data-tooltip="2" name="rating" value="2"><span class="icon"><i class="fas fa-star"></i></span></button>
+                    <button class="button is-light tooltip is-tooltip-bottom" data-tooltip="3" name="rating" value="3"><span class="icon"><i class="fas fa-star"></i></span></button>
+                    <button class="button is-light tooltip is-tooltip-bottom" data-tooltip="4" name="rating" value="4"><span class="icon"><i class="fas fa-star"></i></span></button>
+                    <button class="button is-light tooltip is-tooltip-bottom" data-tooltip="5" name="rating" value="5"><span class="icon"><i class="fas fa-star"></i></span></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END RATING -->
+
+    <!-- BEGIN POKEMON -->
+    <div class="box container">
+        <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Sprite</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Flavor Text</th>
+                    <th>Primary Type</th>
+                    <th>Secondary Type</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each pokemon}}
+                <tr>
+                    <td><img src="{{sprite}}"></td>
+                    <td>{{id}}</td>
+                    <td>{{name}}</td>
+                    <td>{{flavor}}</td>
+                    <td><span style="color:{{firstColor}}"><strong>{{first}}</strong></span></td>
+                    <td>
+                        {{#if second}}<span style="color:{{secondColor}}"><strong>{{second}}</strong></span
+                        {{else}}--{{/if}}
+                    </td>
+                    <td><a class="button is-rounded is-light" href="/pokemon/{{id}}">View</a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <!-- END POKEMON -->
+
+    <!-- BEGIN BUTTONS -->
+    <div class="container"><div class="columns">
+        {{!-- <div class="column">
+            <button class="button is-light is-rounded is-fullwidth">Edit Party</button>
+        </div> --}}
+        <div class="column">
+            <form METHOD="POST" ACTION="/party/{{id}}?_method=DELETE">
+            <button class="button is-danger is-outlined is-rounded is-fullwidth">Delete Party</button>
+            </form>
+        </div>
+    </div></div>
+    <!-- END BUTTONS -->
+</section>

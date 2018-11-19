@@ -1,0 +1,10 @@
+button#showModal {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+table img {
+    max-width: 120px;
+    max-height: 120px;
+}

@@ -1,0 +1,162 @@
+<section class="hero is-medium is-primary is-bold">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Pokémon Parties
+      </h1>
+      <h2 class="subtitle">
+        View our suggested Pokémon parties below.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+<div class="container">
+    <div class="box">
+        <span class="title is-4">View Parties</span>
+    </div>
+
+    <div class="box">
+        <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th colspan="2">Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each party}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{flavor}}</td>
+                    <td>{{rating}}</td>
+                    <td class="has-text-right"><a class="button is-light is-rounded" href="/party/{{id}}">View Party</a></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+</section>
+
+
+<!-- BEGIN MODAL FORM -->
+<button class="button is-rounded is-primary is-medium" id="showModal">
+    <span class="icon"><i class="fas fa-plus"></i></span>
+    <span>Create Party</span>
+</button>
+
+<div class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+      <div class="box">
+            <h3 class="title">Add a Pokémon</h3>
+            <hr>
+            <form METHOD="POST" ACTION="/party">
+            <div class="columns">
+                <div class="field column">
+                    <label class="label">Name</label>
+                    <div class="control">
+                        <input class="input" type="text" name="name" placeholder="name" required>
+                    </div>
+                </div>
+
+                <div class="field column">
+                    <label class="label">Description</label>
+                    <div class="control">
+                        <input class="input" type="text" name="flavor" placeholder="name" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="field column">
+                    <label class="label">First</label>
+                    <div class="control"><div class="select is-fullwidth">
+                        <select name="p1" required>
+                            <option selected disabled>Choose a Pokemon</option>
+                            {{#each pokemon}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div></div>
+                </div>
+
+                <div class="field column">
+                    <label class="label">Second</label>
+                    <div class="control"><div class="select is-fullwidth">
+                        <select name="p2" required>
+                            <option selected disabled>Choose a Pokemon</option>
+                            {{#each pokemon}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div></div>
+                </div>
+
+                <div class="field column">
+                    <label class="label">Third</label>
+                    <div class="control"><div class="select is-fullwidth">
+                        <select name="p3" required>
+                            <option selected disabled>Choose a Pokemon</option>
+                            {{#each pokemon}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div></div>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="field column">
+                    <label class="label">Fourth</label>
+                    <div class="control"><div class="select is-fullwidth">
+                        <select name="p4" required>
+                            <option selected disabled>Choose a Pokemon</option>
+                            {{#each pokemon}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div></div>
+                </div>
+
+                <div class="field column">
+                    <label class="label">Fifth</label>
+                    <div class="control"><div class="select is-fullwidth">
+                        <select name="p5" required>
+                            <option selected disabled>Choose a Pokemon</option>
+                            {{#each pokemon}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div></div>
+                </div>
+
+                <div class="field column">
+                    <label class="label">Sixth</label>
+                    <div class="control"><div class="select is-fullwidth">
+                        <select name="p6" required>
+                            <option selected disabled>Choose a Pokemon</option>
+                            {{#each pokemon}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div></div>
+                </div>
+            </div>
+
+            <hr>
+            <button class="button is-primary is-fullwidth is-rounded">Create Party</button>
+            </form>
+      </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<!-- END MODAL FORM -->
+
+<!-- BEGIN SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="/scripts/main.js"></script>
+<!-- END SCRIPTS -->

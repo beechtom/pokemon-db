@@ -1,0 +1,20 @@
+{
+  "name": "cs340-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/pm2/bin/pm2 start app.js --watch",
+    "logs": "./node_modules/pm2/bin/pm2 logs app"
+  },
+  "author": "tom beech",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.0",
+    "method-override": "^3.0.0",
+    "mysql": "^2.16.0",
+    "nodemon": "^1.18.5"
+  }
+}

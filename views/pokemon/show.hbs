@@ -1,0 +1,171 @@
+<section class="hero is-medium is-light is-bold">
+    <div class="hero-body">
+        <div class="container">
+            <span class="subtitle is-4">{{id}} </span>
+            <span class="title is-1"> {{name}}</span>
+        </div>
+    </div>
+</section>
+
+<!-- BEGIN POKEMON -->
+<section class="section">
+    <div class="container">
+        <div class="level box">
+            <div class="level-item has-text-left">
+                <img src="{{sprite}}">
+            </div>
+            <div class="level-item has-text-left">
+                {{flavor}}
+            </div>
+            <div class="level-item">
+                <span style="color:{{firstColor}}"><strong>{{first}}</strong></span>
+            </div>
+            {{#if secondColor}}
+            <div class="level-item">
+                <span style="color:{{secondColor}}"><strong>{{second}}</strong></span>
+            </div>
+            {{/if}}
+        </div>
+<!-- END POKEMON -->
+
+
+<!-- BEGIN REGIONS -->
+        <div class="box">
+            <span class="subtitle is-4">Regions</span>
+            <button class="button is-primary is-rounded is-pulled-right" id="showRegion">
+                <span class="icon"><i class="fas fa-plus"></i></span>
+                <span>Add Region</span>
+            </button>
+            <hr>
+            {{#if region}}
+            <div class="level">
+                {{#each region}}
+                <div class="level-item">
+                    <span class="subtitle is-6">{{name}}</span>
+                    <form class="is-spaced" METHOD="POST" ACTION="/pokemon/{{../id}}/region/{{id}}?_method=DELETE">
+                    <button class="button is-white is-rounded is-fullwidth">
+                        <span class="icon"><i class="fas fa-times-circle"></i></span>
+                    </button>
+                    </form>
+                </div>
+                {{/each}}
+            </div>
+            {{else}}
+            <h5 class="subtitle is-5 has-text-centered">No known regions.</h5>
+            {{/if}}
+        </div>
+<!-- END REGIONS -->
+
+
+<!-- BEGIN MOVES -->
+    <div class="box">
+    <span class="subtitle is-4">Moveset</span>
+    <button class="button is-primary is-rounded is-pulled-right" id="showMove">
+        <span class="icon"><i class="fas fa-plus"></i></span>
+        <span>Add Move</span>
+    </button>
+    <hr>
+    {{#if move}}
+    <table class="table is-fullwidth">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th class="has-text-centered">PP</th>
+                <th class="has-text-centered">Power</th>
+                <th class="has-text-centered">Accuracy</th>
+                <th>Flavor Text</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each move}}
+            <tr>
+                <td>{{name}}</td>
+                <td><span style="color:{{color}}"><strong>{{type}}</strong></span></td>
+                <td class="has-text-centered">{{pp}}</td>
+                <td class="has-text-centered">{{#if power}}{{power}}{{else}}--{{/if}}</td>
+                <td class="has-text-centered">{{#if accuracy}}{{accuracy}}{{else}}--{{/if}}</td>
+                <td>{{flavor}}</td>
+                <td>
+                    <form METHOD="POST" ACTION="/pokemon/{{../id}}/move/{{id}}?_method=DELETE">
+                    <button class="button is-white is-rounded is-fullwidth">
+                        <span class="icon"><i class="fas fa-times-circle"></i></span>
+                    </button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{else}}
+    <h5 class="subtitle is-5 has-text-centered">No known moves.</h5>
+    {{/if}}
+    </div>
+</div>
+<!-- END MOVES -->
+</section>
+
+
+<!-- BEGIN MOVE FORM -->
+<div class="modal" aria-label="move">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+      <div class="box">
+            <h3 class="title">Add Moves to {{name}}</h3>
+            <hr>
+            {{#if remMove}}
+            <form METHOD="POST" ACTION="/pokemon/{{id}}/move">
+                {{#each remMove}}
+                <div class="field">
+                <label class="checkbox">
+                    <input type="checkbox" name="move" value="{{id}}">
+                    {{name}}
+                </label>
+                </div>
+                {{/each}}
+                <button class="button is-primary is-fullwidth is-rounded">Add Moves</button>
+            </form>
+            {{else}}
+            <span class="subtitle is-5 has-text-center">This Pokémon knows every move!</span>
+            {{/if}}
+      </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<!-- END MOVE FORM -->
+
+
+<!-- BEGIN REGION FORM -->
+<div class="modal" aria-label="region">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+      <div class="box">
+            <h3 class="title">Add Regions to {{name}}</h3>
+            <hr>
+            {{#if remRegion}}
+            <form METHOD="POST" ACTION="/pokemon/{{id}}/region">
+                {{#each remRegion}}
+                <div class="field">
+                <label class="checkbox">
+                    <input type="checkbox" name="region" value="{{id}}">
+                    {{name}}
+                </label>
+                </div>
+                {{/each}}
+                <button class="button is-primary is-fullwidth is-rounded">Add Regions</button>
+            </form>
+            {{else}}
+            <span class="subtitle is-5 has-text-center">This Pokémon can be found in every region!</span>
+            {{/if}}
+      </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<!-- END REGION FORM -->
+
+
+<!-- BEGIN SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="/scripts/main.js"></script>
+<!-- END SCRIPTS -->

@@ -1,0 +1,80 @@
+<section class="hero is-medium is-info is-bold">
+      <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+        Manage Regions
+        </h1>
+        <h2 class="subtitle">
+        Every Pokémon lives in one or more regions. You can edit and add them below.
+        </h2>
+        </div>
+    </div>
+</section>
+
+<!-- BEGIN TYPES -->
+<section class="section">
+    <div class="container">
+    <div class="columns">
+
+    <div class="column"></div>
+
+    <div class="box column">
+        <table class="table is-fullwidth">
+            <tbody>
+                {{#each region}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>
+                        <form class="is-pulled-right" METHOD="POST" ACTION="/region/{{id}}?_method=DELETE">
+                        <button class="button is-rounded">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="column"></div>
+
+    </div>
+    </div>
+</section>
+<!-- END TYPES -->
+
+
+
+<!-- BEGIN MODAL FORM -->
+<button class="button is-rounded is-info is-medium" id="showModal">
+    <span class="icon"><i class="fas fa-plus"></i></span>
+    <span>Add Region</span>
+</button>
+
+<div class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+      <div class="box">
+            <h3 class="title">Add a Region</h3>
+            <hr>
+            <form METHOD="POST" ACTION="/region">
+            <div class="field">
+                <label class="label">Region</label>
+                <div class="control">
+                <input class="input" type="text" name="name" placeholder="region" required>
+                </div>
+            </div>
+            
+            <hr>
+            <button class="button is-info is-fullwidth is-rounded">Add Region</button>
+        </form>
+      </div>
+  </div>
+
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<!-- END MODAL FORM -->
+
+<!-- BEGIN SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="/scripts/main.js"></script>
+<!-- END SCRIPTS -->
