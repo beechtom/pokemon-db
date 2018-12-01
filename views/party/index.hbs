@@ -43,18 +43,19 @@
 
 
 <!-- BEGIN MODAL FORM -->
-<button class="button is-rounded is-primary is-medium" id="showModal">
+<button class="button is-rounded is-primary is-medium" id="showModal" data-toggle="modal" aria-controls="add-party">
     <span class="icon"><i class="fas fa-plus"></i></span>
     <span>Create Party</span>
 </button>
 
-<div class="modal">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-      <div class="box">
-            <h3 class="title">Add a Pokémon</h3>
-            <hr>
-            <form METHOD="POST" ACTION="/party">
+<div class="modal" id="add-party">
+    <div class="modal-background" data-toggle="modal" aria-controls="add-party"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Add a Party</p>
+        </header>
+        <section class="modal-card-body">
+            <form id="add-form" METHOD="POST" ACTION="/party">
             <div class="columns">
                 <div class="field column">
                     <label class="label">Name</label>
@@ -146,17 +147,12 @@
                     </div></div>
                 </div>
             </div>
-
-            <hr>
-            <button class="button is-primary is-fullwidth is-rounded">Create Party</button>
             </form>
-      </div>
-  </div>
-  <button class="modal-close is-large" aria-label="close"></button>
+        </section>
+        <footer class="modal-card-foot">
+            <input class="button is-primary is-fullwidth is-rounded" type="submit" form="add-form" value="Create Party">
+        </footer>
+    </div>
+    <button class="modal-close is-large" data-toggle="modal" aria-controls="add-party"></button>
 </div>
 <!-- END MODAL FORM -->
-
-<!-- BEGIN SCRIPTS -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="/scripts/main.js"></script>
-<!-- END SCRIPTS -->

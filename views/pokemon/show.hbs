@@ -32,7 +32,7 @@
 <!-- BEGIN REGIONS -->
         <div class="box">
             <span class="subtitle is-4">Regions</span>
-            <button class="button is-primary is-rounded is-pulled-right" id="showRegion">
+            <button class="button is-primary is-rounded is-pulled-right" data-toggle="modal" aria-controls="regions">
                 <span class="icon"><i class="fas fa-plus"></i></span>
                 <span>Add Region</span>
             </button>
@@ -60,7 +60,7 @@
 <!-- BEGIN MOVES -->
     <div class="box">
     <span class="subtitle is-4">Moveset</span>
-    <button class="button is-primary is-rounded is-pulled-right" id="showMove">
+    <button class="button is-primary is-rounded is-pulled-right" data-toggle="modal" aria-controls="moves">
         <span class="icon"><i class="fas fa-plus"></i></span>
         <span>Add Move</span>
     </button>
@@ -108,14 +108,15 @@
 
 
 <!-- BEGIN MOVE FORM -->
-<div class="modal" aria-label="move">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-      <div class="box">
-            <h3 class="title">Add Moves to {{name}}</h3>
-            <hr>
+<div class="modal" id="moves">
+    <div class="modal-background" data-toggle="modal" aria-controls="moves"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Add Moves to {{name}}</p>
+        </header>
+        <section class="modal-card-body">
             {{#if remMove}}
-            <form METHOD="POST" ACTION="/pokemon/{{id}}/move">
+            <form id="add-moves" METHOD="POST" ACTION="/pokemon/{{id}}/move">
                 {{#each remMove}}
                 <div class="field">
                 <label class="checkbox">
@@ -124,27 +125,31 @@
                 </label>
                 </div>
                 {{/each}}
-                <button class="button is-primary is-fullwidth is-rounded">Add Moves</button>
+                {{!-- <button class="button is-primary is-fullwidth is-rounded">Add Moves</button> --}}
             </form>
             {{else}}
             <span class="subtitle is-5 has-text-center">This Pokémon knows every move!</span>
             {{/if}}
-      </div>
-  </div>
-  <button class="modal-close is-large" aria-label="close"></button>
+        </section>
+        <footer class="modal-card-foot">
+            <input class="button is-primary is-fullwidth is-rounded" type="submit" form="add-moves" value="Add Moves">
+        </footer>
+    </div>
+    <button class="modal-close is-large" data-toggle="modal" aria-controls="moves"></button>
 </div>
 <!-- END MOVE FORM -->
 
 
 <!-- BEGIN REGION FORM -->
-<div class="modal" aria-label="region">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-      <div class="box">
-            <h3 class="title">Add Regions to {{name}}</h3>
-            <hr>
+<div class="modal" id="regions">
+    <div class="modal-background" data-toggle="modal" aria-controls="regions"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Add Regions to {{name}}</p>
+        </header>
+        <section class="modal-card-body">
             {{#if remRegion}}
-            <form METHOD="POST" ACTION="/pokemon/{{id}}/region">
+            <form id="add-regions" METHOD="POST" ACTION="/pokemon/{{id}}/region">
                 {{#each remRegion}}
                 <div class="field">
                 <label class="checkbox">
@@ -153,19 +158,15 @@
                 </label>
                 </div>
                 {{/each}}
-                <button class="button is-primary is-fullwidth is-rounded">Add Regions</button>
             </form>
             {{else}}
             <span class="subtitle is-5 has-text-center">This Pokémon can be found in every region!</span>
             {{/if}}
-      </div>
-  </div>
-  <button class="modal-close is-large" aria-label="close"></button>
+        </section>
+        <footer class="modal-card-foot">
+            <input class="button is-primary is-fullwidth is-rounded" type="submit" form="add-regions" value="Add Regions">
+        </footer>
+    </div>
+    <button class="modal-close is-large" data-toggle="modal" aria-controls="regions"></button>
 </div>
 <!-- END REGION FORM -->
-
-
-<!-- BEGIN SCRIPTS -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="/scripts/main.js"></script>
-<!-- END SCRIPTS -->

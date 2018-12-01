@@ -1,4 +1,5 @@
 var pool = require('../middlewares/pool');
+var helpers = require('./helpers/index');
 
 /*
  * POKEMON INDEX PAGE
@@ -53,7 +54,6 @@ exports.create = function(req, res) {
  */
 
 exports.show = function(req, res) {
-    // SELECT POKEMON
     var options = {
     sql: 'SELECT pokemon.name, flavor, sprite, ' +
          't1.name AS first, t1.color AS firstColor, ' +
@@ -71,7 +71,8 @@ exports.show = function(req, res) {
          'SELECT regions.id, regions.name ' +
          'FROM regions ' +
          'JOIN pokemon_regions ON pokemon_regions.region = regions.id ' +
-         'WHERE pokemon_regions.pokemon = ?; ' +
+         'WHERE pokemon_regions.pokemon = ? ' +
+         'ORDER BY regions.name; ' + 
          'SELECT moves.name, moves.id FROM moves ' +
          'WHERE moves.id NOT IN ( ' +
          'SELECT move FROM pokemon_moves ' +
@@ -104,5 +105,76 @@ exports.show = function(req, res) {
         }
 
         res.render('pokemon/show', context);
+    });
+};
+
+
+/*
+ * ADD POKEMON MOVE
+ */
+
+ exports.addMove = function(req, res) {
+    var options = {
+        sql: 'INSERT INTO pokemon_moves (pokemon, move) VALUES ?',
+        values: [helpers.format(req.params.id, req.body.move)],
+    }
+
+    pool.query (options, function(err) {
+        if (err) { console.log(err); }
+        res.redirect('/pokemon/' + req.params.id);
+    });
+};
+
+
+/*
+ * DELETE POKEMON MOVE
+ */
+
+exports.deleteMove = function(req, res) {
+    var options = {
+        sql: 'DELETE FROM pokemon_moves WHERE pokemon = ? AND move = ?',
+        values: [req.params.pid,
+                 req.params.mid],
+    }
+
+    pool.query (options, function(err) {
+        if (err) { console.log(err); }
+        res.redirect('/pokemon/' + req.params.pid);
+    });
+};
+
+
+/*
+ * ADD POKEMON REGION
+ */
+
+// Add pokemon_regions
+exports.addRegion = function(req, res) {
+    var options = {
+        sql: 'INSERT INTO pokemon_regions (pokemon, region) VALUES ?',
+        values: [helpers.format(req.params.id, req.body.region)],
+    }
+
+    pool.query (options, function(err) {
+        if (err) { console.log(err); }
+        res.redirect('/pokemon/' + req.params.id);
+    });
+};
+
+
+/*
+ * DELETE POKEMON REGION
+ */
+
+exports.deleteRegion = function(req, res) {
+    var options = {
+        sql: 'DELETE FROM pokemon_regions WHERE pokemon = ? AND region = ?',
+        values: [req.params.pid,
+                 req.params.rid],
+    }
+
+    pool.query (options, function(err) {
+        if (err) { console.log(err); }
+        res.redirect('/pokemon/' + req.params.pid);
     });
 };

@@ -46,6 +46,60 @@ exports.create = function(req, res) {
 
 
 /*
+ * READ A MOVE
+ */
+
+exports.read = function(req, res) {
+    var options = {
+        sql: 'SELECT name, flavor, pp, power, accuracy, type ' +
+             'FROM moves ' +
+             'WHERE id = ?',
+        values: [req.params.id],
+    }
+
+    pool.query (options, function(err, results) {
+        if (err) { console.log('ERROR: Cannot select move.'); }
+
+        var context = {
+            name: results[0].name,
+            flavor: results[0].flavor,
+            pp: results[0].pp,
+            power: results[0].power,
+            accuracy: results[0].accuracy,
+            type: results[0].type,
+        }
+
+        res.json(context);
+    });
+};
+
+
+/*
+ * UPDATE A MOVE
+ */
+
+exports.update = function(req, res) {
+    var options = {
+        sql: 'UPDATE moves SET ' +
+             'name = ?, flavor = ?, pp = ?, power = ?, accuracy = ?, type = ? ' +
+             'WHERE id = ?',
+        values: [req.body.name,
+                 req.body.flavor,
+                 req.body.pp,
+                 req.body.power,
+                 req.body.accuracy,
+                 req.body.type,
+                 req.params.id],
+    }
+
+    pool.query (options, function(err) {
+        if (err) { console.log('ERROR: Could not update move.'); }
+        res.redirect('/move');
+    });
+};
+
+
+/*
  * DELETE A MOVE
  */
 

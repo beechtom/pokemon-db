@@ -76,19 +76,21 @@
 
 
 <!-- BEGIN MODAL FORM -->
-<button class="button is-rounded is-primary is-medium" id="showModal">
+<button class="button is-rounded is-primary is-medium" id="showModal" data-toggle="modal" aria-controls="add-pokemon">
     <span class="icon"><i class="fas fa-plus"></i></span>
     <span>Add Pokémon</span>
 </button>
 
-<div class="modal">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-      <div class="box">
-            <h3 class="title">Add a Pokémon</h3>
+<div class="modal" id="add-pokemon">
+    <div class="modal-background" data-toggle="modal" aria-controls="add-pokemon"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Add a Pokémon</p>
+        </header>
+        <section class="modal-card-body">
             <span class="subtitle is-6">You can find a list of Pokémon <a href="https://pokemondb.net/pokedex/national" target="_blank">here</a>.</span>
             <hr>
-            <form METHOD="POST" ACTION="/pokemon">
+            <form id="submit" METHOD="POST" ACTION="/pokemon">
             <div class="columns">
                 <div class="field column">
                     <label class="label">Name</label>
@@ -141,17 +143,12 @@
                     <input class="input" type="text" name="flavor" placeholder="flavor text" required>
                 </div>
             </div>
-
-            <hr>
-            <button class="button is-primary is-fullwidth is-rounded">Add Pokemon</button>
             </form>
-      </div>
-  </div>
-  <button class="modal-close is-large" aria-label="close"></button>
+        </section>
+        <footer class="modal-card-foot">
+            <input class="button is-primary is-fullwidth is-rounded" type="submit" form="submit" value="Add Pokémon">
+        </footer>
+    </div>
+    <button class="modal-close is-large" data-toggle="modal" aria-controls="add-pokemon"></button>
 </div>
 <!-- END MODAL FORM -->
-
-<!-- BEGIN SCRIPTS -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="/scripts/main.js"></script>
-<!-- END SCRIPTS -->

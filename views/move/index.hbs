@@ -46,12 +46,12 @@
                 <th class="has-text-centered">PP</th>
                 <th class="has-text-centered">Power</th>
                 <th class="has-text-centered">Accuracy</th>
-                <th colspan="2">Flavor Text</th>
+                <th colspan="3">Flavor Text</th>
             </tr>
         </thead>
         <tbody>
             {{#each move}}
-            <tr>
+            <tr data-id="{{id}}">
                 <td>{{name}}</td>
                 <td><span style="color:{{color}}"><strong>{{type}}</strong></span></td>
                 <td class="has-text-centered">{{pp}}</td>
@@ -59,9 +59,12 @@
                 <td class="has-text-centered">{{#if accuracy}}{{accuracy}}{{else}}--{{/if}}</td>
                 <td>{{flavor}}</td>
                 <td class="has-text-right">
+                    <button class="button is-light is-rounded" data-toggle="modal" aria-controls="edit-move" aria-label="edit" data-id="{{id}}">Edit</button>
+                </td>
+                <td class="has-text-right">
                     <form class="is-pulled-right" METHOD="POST" ACTION="/move/{{id}}?_method=DELETE">
                     <button class="button is-rounded">Delete</button>
-                    </form> 
+                    </form>
                 </td>
             </tr>
             {{/each}}
@@ -77,20 +80,22 @@
 
 
 
-<!-- BEGIN MODAL FORM -->
-<button class="button is-rounded is-primary is-medium" id="showModal">
+<!-- BEGIN MODAL CREATE FORM -->
+<button class="button is-rounded is-primary is-medium" id="showModal" data-toggle="modal" aria-controls="add-move">
     <span class="icon"><i class="fas fa-plus"></i></span>
     <span>Add Move</span>
 </button>
 
-<div class="modal">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-      <div class="box">
-            <h3 class="title">Add a Move</h3>
+<div class="modal" id="add-move">
+    <div class="modal-background" data-toggle="modal" aria-controls="add-move"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Add a Move</p>
+        </header>
+        <section class="modal-card-body">
             <span class="subtitle is-6">You can find a list of moves <a href="https://bulbapedia.bulbagarden.net/wiki/List_of_moves" target="_blank">here</a>.</span>
             <hr>
-            <form METHOD="POST" ACTION="/move">
+            <form id="add-form" METHOD="POST" ACTION="/move">
             <div class="columns">
                 <div class="field column">
                     <label class="label">Name</label>
@@ -141,18 +146,88 @@
                     <input class="input" type="text" name="flavor" placeholder="flavor text" required>
                 </div>
             </div>
-            
-            <hr>
-            <button class="button is-primary is-fullwidth is-rounded">Add Move</button>
-        </form>
-      </div>
-  </div>
-
-  <button class="modal-close is-large" aria-label="close"></button>
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+            <input class="button is-primary is-fullwidth is-rounded" type="submit" form="add-form" value="Add Move">
+        </footer>
+    </div>
+    <button class="modal-close is-large" data-toggle="modal" aria-controls="add-move"></button>
 </div>
-<!-- END MODAL FORM -->
+<!-- END MODAL CREATE FORM -->
 
-<!-- BEGIN SCRIPTS -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="/scripts/main.js"></script>
-<!-- END SCRIPTS -->
+
+<!-- BEGIN MODAL EDIT FORM -->
+<div class="modal" id="edit-move">
+    <div class="modal-background" data-toggle="modal" aria-controls="edit-move"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title" id="edit-title">Edit a Move</p>
+        </header>
+        <section class="modal-card-body">
+            <span class="subtitle is-6">You can find a list of moves <a href="https://bulbapedia.bulbagarden.net/wiki/List_of_moves" target="_blank">here</a>.</span>
+            <hr>
+            <form id="edit-form" METHOD="POST" ACTION="/move" id="edit-form">
+            <div class="columns">
+                <div class="field column">
+                    <label class="label">Name</label>
+                    <div class="control">
+                        <input class="input" id="edit-name" type="text" name="name" required> 
+                    </div>
+                </div>
+
+                <div class="field column">
+                    <label class="label">Type</label>
+                    <div class="control"><div class="select is-fullwidth">
+                        <select id="edit-type" name="type" required>
+                            {{#each type}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                        </select>
+                    </div></div>
+                </div>
+            </div>
+            
+            <div class="columns">
+                <div class="field column">
+                    <label class="label">PP</label>
+                    <div class="control">
+                        <input class="input" id="edit-pp" type="number" name="pp" placeholder="pp" required>
+                    </div>
+                </div>
+
+                <div class="field column">
+                    <label class="label">Power</label>
+                    <div class="control">
+                        <input class="input" id="edit-power" type="number" name="power" placeholder="power">
+                    </div>
+                </div>
+
+                <div class="field column">
+                    <label class="label">Accuracy</label>
+                    <div class="control">
+                        <input class="input" id="edit-accuracy" type="number" name="accuracy" placeholder="accuracy">
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Flavor Text</label>
+                <div class="control">
+                    <input class="input" id="edit-flavor" type="text" name="flavor" placeholder="flavor text" required>
+                </div>
+            </div>
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+            <input class="button is-primary is-fullwidth is-rounded" type="submit" form="edit-form" value="Edit Move">
+        </footer>
+    </div>
+
+    <button class="modal-close is-large" data-toggle="modal" aria-controls="edit-move"></button>
+</div>
+<!-- END MODAL EDIT FORM -->
+
+<!-- BEGIN EDIT FORM SCRIPT -->
+<script src="/scripts/editmove.js"></script>
+<!-- END EDIT FORM SCRIPT -->

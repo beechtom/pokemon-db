@@ -1,23 +1,29 @@
-$(document).ready(function() {
+function openNav() {
+    let burger = document.querySelector('[data-target=navbar]');
+    let navbar = document.querySelector('#navbar');
 
-    $("#showModal").click(function() {
-        $(".modal").addClass("is-active");  
-      });
+    burger.addEventListener('click', function() {
+        burger.classList.toggle('is-active');
+        navbar.classList.toggle('is-active');
+    });
+}
 
-      $("#showMove").click(function() {
-        $("[aria-label=move]").addClass("is-active");  
-      });
+function modal() {
+    let buttons = document.querySelectorAll('[data-toggle=modal]');
 
-      $("#showRegion").click(function() {
-        $("[aria-label=region]").addClass("is-active");  
-      });
-      
-      $("[aria-label=close], .modal-background").click(function() {
-         $(".modal").removeClass("is-active");
-      });
+    buttons.forEach(function(btn) {
+        let modal = document.getElementById(btn.getAttribute("aria-controls"));
 
-      $("[data-target=navbar]").click(function() {
-          $("#navbar").toggleClass("is-active");
-      });
+        btn.addEventListener('click', function() {
+            modal.classList.toggle('is-active');
+        });
+    });
+}
 
-});
+function fireWhenReady(func) {
+    document.addEventListener('DOMContentLoaded', func);
+}
+
+fireWhenReady(openNav);
+fireWhenReady(modal);
+// fireWhenReady(editForm);
